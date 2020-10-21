@@ -6,9 +6,8 @@ import time
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 
-# Define list to store the file names and one to store the temperatures from the sensor
-file_list = []
-temp_list = []
+# Define list to store each sensor it's data in
+sensors = []
 
 # Define the directory of the sensors
 base_dir = '/sys/bus/w1/devices/'
@@ -40,17 +39,17 @@ def read_temp(device_file):
 	if t_pos != -1:
 		temp_string = lines[1][t_pos+2:]
 		temp = float(temp_string) / 1000.0
-		return temp
+		return 10
 
 # Fill the list with the file of each sensor
 for device_folder in glob.glob(base_dir + '10*'):
         device_file = device_folder + '/w1_slave'
-        file_list.append(device_file)
+        sensor = {'file': device_file}
+        sensors.append(sensor)
 
 # Print the temperature of each sensor
 while True:
-	for sensor in file_list:
-		temp_list.append(read_temp(device_file))
-	print(temp_list)
-	temp_list = []
+	for i in range(4):
+		sensors[i]['temp'] = read_temp(sensors[i]['file'])
+	print(sensors)
 	time.sleep(0.5)

@@ -42,6 +42,13 @@ def read_temp(file):
 		temp = float(temp_string) / 1000.0
 		return temp
 
+# Calculate the average temperature
+def avg_temp(list):
+	sum = 0
+	for t in list:
+		sum += t
+	return sum /len(list)
+
 # Fill the list with the file of each sensor
 for device_folder in glob.glob(base_dir + '10*'):
         device_file = device_folder + '/w1_slave'
@@ -52,5 +59,6 @@ while True:
 	for file in files:
 		temp_list.append(read_temp(file))
 	print(temp_list)
+	print(avg_temp(temp_list))
 	temp_list = []
-	time.sleep(0.5)
+	time.sleep(1)

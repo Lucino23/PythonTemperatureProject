@@ -39,7 +39,7 @@ def read_temp(device_file):
 	if t_pos != -1:
 		temp_string = lines[1][t_pos+2:]
 		temp = float(temp_string) / 1000.0
-		return 10
+		return temp
 
 # Fill the list with the file of each sensor
 for device_folder in glob.glob(base_dir + '10*'):

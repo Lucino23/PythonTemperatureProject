@@ -44,10 +44,10 @@ def read_temp(file):
 
 # Calculate the average temperature
 def avg_temp(list):
-	sum = 0
+	sumTemp = 0
 	for t in list:
-		sum += t
-	return sum /len(list)
+		sumTemp += t
+	return sumTemp /len(list)
 
 # Fill the list with the file of each sensor
 for device_folder in glob.glob(base_dir + '10*'):

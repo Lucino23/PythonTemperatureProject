@@ -7,7 +7,7 @@ try:
     conn = mariadb.connect(
     user="luca",
     password="Antluc0824",
-    host="192.168.0.118",
+    host="localhost",
     port=3306,
     database="PyTempProject"
     )
@@ -20,7 +20,7 @@ cursor = conn.cursor()
 conn.autocommit = True
 
 # Insert the data in to the "Meting" table
-query = """SELECT * FROM Meting WHERE Stop_datum_tijd IS NOT NULL;"""
+query = """SELECT * FROM Meting;"""
 cursor.execute(query)
 db_data = cursor.fetchall()
 

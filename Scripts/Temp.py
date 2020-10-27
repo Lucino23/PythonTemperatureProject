@@ -51,7 +51,7 @@ def get_Stop_datum_tijd(cursor, Meting_id):
 
 # Calculate the average temperature
 def Update_database(cursor, Meting_id, tempList):
-        query  = """INSERT INTO Metingen(Sensor_1, Sensor_2, Sensor_3, Sensor_4, Meting_id) VALUES(?,?,?,?,?)"""
+        query  = """INSERT INTO Metingen(Sensor_1, Sensor_2, Sensor_3, Sensor_4, Meting_id) VALUES(?,?,?,?,?);"""
         data =  (tempList[0], tempList[1], tempList[2], tempList[3], Meting_id)
         cursor.execute(query, data)
 
@@ -61,7 +61,7 @@ def main():
         files = []
 
         # Define tyhe list with default NULL as value because if a sensor didn't get a value we will have to insert null into the database
-        temp_list = ["NULL", "NULL", "NULL", "NULL"]
+        temp_list = [None, None, None, None]
 
         # Fill the list with the file of each sensor
         for device_folder in glob.glob('/sys/bus/w1/devices/10*'):
@@ -73,7 +73,7 @@ def main():
                 conn = mariadb.connect(
                 user="luca",
                 password="Antluc0824",
-                host="192.168.0.118",
+                host="localhost",
                 port=3306,
                 database="PyTempProject"
                 )
@@ -88,12 +88,12 @@ def main():
         Stop_datum_tijd = get_Stop_datum_tijd(cursor, Meting_id)
 
         # Get the temperature of each sensor and update the database table "Metingen"
-        while Stop_datum_tijd == "NULL":
+        while Stop_datum_tijd == None:
                 for i in range(len(files)):
                         temp_list[i] = read_temp(files[i])
                 Update_database(cursor, Meting_id, temp_list)
                 Stop_datum_tijd = get_Stop_datum_tijd(cursor, Meting_id)
-                temp_list = ["NULL", "NULL", "NULL", "NULL"]
+                temp_list = [None, None, None, None]
                 time.sleep(2)
 
         # Close the connection

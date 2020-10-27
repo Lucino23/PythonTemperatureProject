@@ -13,7 +13,7 @@ try:
     conn = mariadb.connect(
     user="luca",
     password="Antluc0824",
-    host="192.168.0.118",
+    host="localhost",
     port=3306,
     database="PyTempProject"
     )
@@ -32,7 +32,7 @@ Meting_id = cursor.fetchall()
 
 Stop_datum_tijd = get_Stop_datum_tijd(cursor, Meting_id)
 
-while Stop_datum_tijd != "NULL":
+while Stop_datum_tijd != None:
     # Get the  the data in to the "Meting" table
     query = """SELECT Sensor_1, Sensor_2, Sensor_3, Sensor_4 FROM Metingen WHERE Meting_id = ? and Metingen_id = MAX(Metingen_id);"""
     cursor.execute(query, Meting_id)

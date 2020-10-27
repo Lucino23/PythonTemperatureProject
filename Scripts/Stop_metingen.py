@@ -7,7 +7,7 @@ try:
     conn = mariadb.connect(
     user="luca",
     password="Antluc0824",
-    host="192.168.0.118",
+    host="localhost",
     port=3306,
     database="PyTempProject"
     )
